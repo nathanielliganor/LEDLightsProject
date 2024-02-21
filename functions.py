@@ -23,5 +23,3 @@ def shutoff():
     requests.post(url)
     return "Shutoff"
 
-
-change_color(150, 150, 150, 100, 255)
