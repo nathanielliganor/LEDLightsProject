@@ -15,13 +15,21 @@ def generate_flag_signals():
     
     for row in range(10):
         for col in range(30):
-            if row < 5 and col < 13:  # Top-left rectangle (blue)
-                signal_values.append(color_mapping["1"])  # Signal for blue color
-            elif col < 25:  # Red stripes
-                signal_values.append(color_mapping["2"])  # Signal for red color
-            else:  # White stripes
-                signal_values.append(color_mapping["3"])  # Signal for white color
-                
+            if row % 2 == 0:  # Even rows (0-based indexing)
+                if col < 13:  # Top-left rectangle (blue)
+                    signal_values.append(color_mapping["2"])  # Signal for blue color
+                elif col < 25:  # Red stripes
+                    signal_values.append(color_mapping["1"])  # Signal for red color
+                else:  # White stripes
+                    signal_values.append(color_mapping["3"])  # Signal for white color
+            else:  # Odd rows
+                if col < 13:  # Top-left rectangle (blue)
+                    signal_values.append(color_mapping["1"])  # Signal for red color
+                elif col < 25:  # Red stripes
+                    signal_values.append(color_mapping["2"])  # Signal for blue color
+                else:  # White stripes
+                    signal_values.append(color_mapping["3"])  # Signal for white color
+    
     return signal_values
 
 # Main function to generate signals and send them
