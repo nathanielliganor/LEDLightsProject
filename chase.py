@@ -13,7 +13,8 @@ def send_signals(signal_values):
     try:
         response = requests.post(cats_url, json={"values": signal_values})
     except:
-        raise Exception('Error sending signals', response.status_code, response.text)
+        raise Exception('Error sending signals',
+                        response.status_code, response.text)
 
 
 # Generate a 300-light blank sequence
@@ -76,9 +77,10 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100',
         # If persist is true, then lights do not
         # turn off behind the leader and chaser!
         #
-        # TO REMOVE THIS: keep the body of the "else" function
-        # kill the remaining conditional. Also kill
-        # the function argument.
+        # TO REMOVE THIS: keep the body of the "else" function, and
+        # 1. Kill the remaining conditional and fix indent.
+        # 2. Kill the if/then/else postCallback() line.
+        # 3. Kill the function argument.
         if persist == True:
             # Note: replace each instance of "values" (see else)
             # with "sequence" to persist lights.
@@ -100,10 +102,9 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100',
             values_before = values[:i_leader_start]
             values_replace = leader_rgba
             values_after = values[i_leader_end:]
-            values = values_before + values_replace + values_after  # Note: replace "values" with "values_default" to persist lights.
+            values = values_before + values_replace + values_after
 
-        # Using a callback to make
-        # swaps easy.
+        # Using a callback to make swaps easy.
         if persist == True:
             postCallback(sequence)
         else:
@@ -142,7 +143,8 @@ sequence_rbga = '255,100,255,100'  #optional
 gap_size = 3  #optional
 gap_change = 1  #optional
 speed = 0.00001  #optional
-persist = False #optional (and perhaps we don't do this?)
+persist = True #optional (and perhaps we don't do this?)
+
 
 # Execute the sequence.
 doChase(sequence, callback, leader_rbga, sequence_rbga, gap_size, gap_change, speed, persist)
