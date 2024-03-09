@@ -4,7 +4,7 @@ import requests
 
 # Global vars.
 cats_url = "https://si568.umsi.run/change?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoic2hhaGF5dUB1bWljaC5lZHUifQ.lOZzE4nwWFj-sNa-etncEQXAJV9rbCV7ElBnGx2skKk&device=CATS"
-total_leds = list(range(0, 300))
+
 
 
 # We can use a common function to
@@ -22,7 +22,7 @@ def send_signals(signal_values):
 def getBlankSequence():
     values_default = ''
 
-    for led_i in total_leds:
+    for led_i in list(range(0, 300)):
         leading_comma = ',' if led_i != 0 else ''
         values_default = values_default + leading_comma + '0,0,0,0'
 
@@ -67,15 +67,18 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100',
     i_chaser_start = 0
     i_chaser_end = 7 # Target first light (4 integers + 3 commas)
 
-    for i in total_leds:
+    for i in list(range(0, 300)):
         # Chaser always takes the original sequence
         # and creates a new set of values.
         values_before = sequence[:i_chaser_start]
         values_replace = chaser_rgba
         values_after = sequence[i_chaser_end:]
 
-        # If persist is true, then lights do not
-        # turn off behind the leader and chaser!
+        # Persist a "trail" of lights.
+        #
+        # Extra fluff. We can delete if it becomes distracting.
+        # If persist is true, then lights do not turn off
+        # behind the leader and chaser.
         #
         # TO REMOVE THIS: keep the body of the "else" function, and
         # 1. Kill the remaining conditional and fix indent.
@@ -113,7 +116,7 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100',
         # Leader runs along the strip at a constant
         # rate until it reaches the end, where it loops
         # back around to the beginning of the strip.
-        if len(total_leds * 4) >= i_leader_end + 8:
+        if len(list(range(0, 300)) * 4) >= i_leader_end + 8:
             i_leader_start = i_leader_start + 8
             i_leader_end = i_leader_end + 8
         else:
@@ -123,7 +126,7 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100',
         # Chaser will run along the strip, opening or closing the gap
         # with the leader, and looping back around when it reaches
         # the end of the strip.
-        if len(total_leds * 8) >= i_chaser_end + 8 + gap_change:
+        if len(list(range(0, 300)) * 8) >= i_chaser_end + 8 + gap_change:
             i_chaser_start = i_chaser_start + 8 + gap_change
             i_chaser_end = i_chaser_end + 8 + gap_change
         else:
