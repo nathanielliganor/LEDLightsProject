@@ -84,11 +84,9 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100', chaser_rgba
         # rate until it reaches the end, where it loops
         # back around to the beginning of the strip.
         if len(total_leds * 4) >= i_leader_end + 8:
-            print('leader ok: ', len(total_leds), i_leader_end, i_leader_start)
             i_leader_start = i_leader_start + 8
             i_leader_end = i_leader_end + 8
         else:
-            print('leader else: ', len(total_leds), i_leader_end, i_leader_start)
             i_leader_start = gap_size
             i_leader_end = gap_size + 7
 
@@ -96,11 +94,9 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100', chaser_rgba
         # with the leader, and looping back around when it reaches
         # the end of the strip.
         if len(total_leds * 8) >= i_chaser_end + 8 + gap_change:
-            print('chase ok: ', len(total_leds), i_chaser_end, i_chaser_start)
             i_chaser_start = i_chaser_start + 8 + gap_change
             i_chaser_end = i_chaser_end + 8 + gap_change
         else:
-            print('chase else: ', len(total_leds), i_chaser_end, i_chaser_start)
             i_chaser_start = 0
             i_chaser_end = 7
 
