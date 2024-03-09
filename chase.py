@@ -24,7 +24,7 @@ def getBlankSequence():
 
     for led_i in total_leds:
         leading_comma = ',' if led_i != 0 else ''
-        values_default = values_default + leading_comma + '0,0,0,0'\
+        values_default = values_default + leading_comma + '0,0,0,0'
 
     return values_default
 
@@ -53,12 +53,12 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100',
 
     # The chaser light's gap and [de]accerlation can
     # be adjusted on a per-light, per-loop basis.
-    # Note: an arg of '1' indicates an 8-light gap.
-    # e.g. 4^3 = (4 vals)^(three lights).
+    # Note: an arg of '1' indicates an 1-light gap,
+    # or 4 values (r,b,g,a), e.g. 4^3 = (4 vals)^(three lights).
     gap_size = 4**gap_size
-    # Note: an arge of '1' indicates an 8 light gap
+    # Note: an arg of '1' indicates a 1 light gap
     # by one light per loop.
-    gap_change = 8*gap_change
+    gap_change = 8 * gap_change # NOTE: changing this to 4 * gap_change is really cool.
 
     # Leader light sits at wherever the chaser
     # is plus the current gap_size.
@@ -143,7 +143,7 @@ sequence_rbga = '255,100,255,100'  #optional
 gap_size = 3  #optional
 gap_change = 1  #optional
 speed = 0.00001  #optional
-persist = True #optional (and perhaps we don't do this?)
+persist = False #optional (and perhaps we don't do this?)
 
 
 # Execute the sequence.
