@@ -42,15 +42,22 @@ def getBlankSequence():
 #
 # Returns:
 # null
-def doChase(sequence, postCallback, leader_rgba = '255,255,255,100', chaser_rgba = '255,255,255,100', gap_size = 3, gap_change = 1, speed = 0.00001):
+def doChase(sequence, postCallback, leader_rgba = '255,255,255,100',
+            chaser_rgba = '255,255,255,100', gap_size = 3,
+            gap_change = 1, speed = 0.00001, persist = False):
+
     # Standardardize rgba formats consistency.
     leader_rgba = leader_rgba.replace(' ', '')
     chaser_rgba = chaser_rgba.replace(' ', '')
 
     # The chaser light's gap and [de]accerlation can
     # be adjusted on a per-light, per-loop basis.
-    gap_size = 4**gap_size # ex. '1' => 8-light gap of 4^3 = (4 vals)^(three lights)
-    gap_change = 8*gap_change # '1' => 8 = close gap by one light per loop
+    # Note: an arg of '1' indicates an 8-light gap.
+    # e.g. 4^3 = (4 vals)^(three lights).
+    gap_size = 4**gap_size
+    # Note: an arge of '1' indicates an 8 light gap
+    # by one light per loop.
+    gap_change = 8*gap_change
 
     # Leader light sits at wherever the chaser
     # is plus the current gap_size.
@@ -65,20 +72,42 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100', chaser_rgba
         values_before = sequence[:i_chaser_start]
         values_replace = chaser_rgba
         values_after = sequence[i_chaser_end:]
-        values = values_before + values_replace + values_after  # Note: replace "values" with "values_default" to persist lights.
 
-        # Leader always takes the new set of values
-        # from the chaser and further modifies it. This is
-        # how lights are turned off after it's "turn"
-        # in the chase sequence.
-        values_before = values[:i_leader_start]
-        values_replace = leader_rgba
-        values_after = values[i_leader_end:]
-        values = values_before + values_replace + values_after  # Note: replace "values" with "values_default" to persist lights.
+        # If persist is true, then lights do not
+        # turn off behind the leader and chaser!
+        #
+        # TO REMOVE THIS: keep the body of the "else" function
+        # kill the remaining conditional. Also kill
+        # the function argument.
+        if persist == True:
+            # Note: replace each instance of "values" (see else)
+            # with "sequence" to persist lights.
+            sequence = values_before + values_replace + values_after
+            # Leader always takes the new set of values
+            # from the chaser and further modifies it. This is
+            # how lights are turned off after it's "turn"
+            # in the chase sequence.
+            values_before = sequence[:i_leader_start]
+            values_replace = leader_rgba
+            values_after = sequence[i_leader_end:]
+            sequence = values_before + values_replace + values_after
+        else:
+            values = values_before + values_replace + values_after
+            # Leader always takes the new set of values
+            # from the chaser and further modifies it. This is
+            # how lights are turned off after it's "turn"
+            # in the chase sequence.
+            values_before = values[:i_leader_start]
+            values_replace = leader_rgba
+            values_after = values[i_leader_end:]
+            values = values_before + values_replace + values_after  # Note: replace "values" with "values_default" to persist lights.
 
         # Using a callback to make
         # swaps easy.
-        postCallback(values)
+        if persist == True:
+            postCallback(sequence)
+        else:
+            postCallback(values)
 
         # Leader runs along the strip at a constant
         # rate until it reaches the end, where it loops
@@ -113,6 +142,7 @@ sequence_rbga = '255,100,255,100'  #optional
 gap_size = 3  #optional
 gap_change = 1  #optional
 speed = 0.00001  #optional
+persist = False #optional (and perhaps we don't do this?)
 
 # Execute the sequence.
-doChase(sequence, callback, leader_rbga, sequence_rbga, gap_size, gap_change, speed)
+doChase(sequence, callback, leader_rbga, sequence_rbga, gap_size, gap_change, speed, persist)
