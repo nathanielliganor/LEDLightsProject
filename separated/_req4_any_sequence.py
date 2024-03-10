@@ -1,44 +1,32 @@
 import time
-import requests
-import csv
+from _get_blank_sequence import getBlankSequence
+from _send_signals import send_signals
+
+""" Generate a 300-light blank sequence
+consisting of unlit "0" values.
+"""
+# def getBlankSequence():
+#     values_default = ''
+#
+#     for led_i in list(range(0, 300)):
+#         leading_comma = ',' if led_i != 0 else ''
+#         values_default = values_default + leading_comma + '0,0,0,0'
+#
+#     return values_default
 
 
-# Global vars.
-cats_url = "https://si568.umsi.run/change?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoic2hhaGF5dUB1bWljaC5lZHUifQ.lOZzE4nwWFj-sNa-etncEQXAJV9rbCV7ElBnGx2skKk&device=CATS"
-
-
-# We can use a common function to
-# send values.
-def send_signals(signal_values):
-    try:
-        response = requests.post(cats_url, json={"values": signal_values})
-    except:
-        raise Exception('Error sending signals',
-                        response.status_code, response.text)
-
-
-# Generate a 300-light blank sequence
-# consisting of unlit "0" values.
-def getBlankSequence():
-    values_default = ''
-
-    for led_i in list(range(0, 300)):
-        leading_comma = ',' if led_i != 0 else ''
-        values_default = values_default + leading_comma + '0,0,0,0'
-
-    return values_default
-
-
-# Rescale a range of numbers into another, new
-# range, while occupying the entire new range.
-# @see: https://stackoverflow.com/questions/19057341/translate-numbers-from-a-range-to-another-range
+""" Rescale a range of numbers into another, new
+range, while occupying the entire new range.
+@see: https://stackoverflow.com/questions/19057341/translate-numbers-from-a-range-to-another-range
+"""
 def rescale(val, in_min, in_max, out_min, out_max):
     return out_min + (val - in_min) * ((out_max - out_min) / (in_max - in_min))
 
 
-# Change colors, locations, alphas, and speed
-# based on decibel samples using Audacity.
-def danceToBeats(sequence, postCallback, loops = 1):
+""" Change colors, locations, alphas, and speed
+based on decibel samples using Audacity.
+"""
+def danceToBeats(sequence, postCallback, numloops = 1):
     import csv
     beats = []
     with open('dance_to_beats.csv', newline='') as csvfile:
@@ -54,7 +42,7 @@ def danceToBeats(sequence, postCallback, loops = 1):
 
     # Todo: seems to loop endlessly, check reused "loops" variable in range().
     # number of playbacks
-    loops = range(0, loops)
+    loops = range(0, numloops)
     for loop in loops:
 
         j = 0

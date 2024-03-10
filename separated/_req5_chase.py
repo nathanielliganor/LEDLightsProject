@@ -1,48 +1,13 @@
 import time
-import requests
+from _get_blank_sequence import getBlankSequence
+from _send_signals import send_signals
 
 
-# Global vars.
-cats_url = "https://si568.umsi.run/change?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoic2hhaGF5dUB1bWljaC5lZHUifQ.lOZzE4nwWFj-sNa-etncEQXAJV9rbCV7ElBnGx2skKk&device=CATS"
-
-
-# We can use a common function to
-# send values.
-def send_signals(signal_values):
-    try:
-        response = requests.post(cats_url, json={"values": signal_values})
-    except:
-        raise Exception('Error sending signals',
-                        response.status_code, response.text)
-
-
-# Generate a 300-light blank sequence
-# consisting of unlit "0" values.
-def getBlankSequence():
-    values_default = ''
-
-    for led_i in list(range(0, 300)):
-        leading_comma = ',' if led_i != 0 else ''
-        values_default = values_default + leading_comma + '0,0,0,0'
-
-    return values_default
-
-
-# Description:
-# This function takes a blank sequence of unlit lights
-# and creates a leader-chaser sequence where the chaser
-# can try to close the gap with the leader.
-#
-# Arguments:
-# sequence is a plain csv string of four integers separated by commas.
-# callback: function that posts the request.
-# leader_rbga, chaser_rbga: 4-value comma separated RGBA tuples
-# gap_size: initial number of leds separting the leader from the chaser.
-# gap_change: [de]acceleration of the chaser per loop in milliseconds.
-#
-# Returns:
-# null
-def doChase(sequence, postCallback, leader_rgba = '255,255,255,100',
+"""This function takes a blank sequence of unlit lights
+and creates a leader-chaser sequence where the chaser
+can try to close the gap with the leader.
+"""
+def chase(sequence, postCallback, leader_rgba = '255,255,255,100',
             chaser_rgba = '255,255,255,100', gap_size = 3,
             gap_change = 1, speed = 0.00001, persist = False):
 
@@ -57,14 +22,14 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100',
     gap_size = 4**gap_size
     # Note: an arg of '1' indicates a 1 light gap
     # by one light per loop.
-    gap_change = 8 * gap_change # NOTE: changing this to 4 * gap_change is really cool.
+    gap_change = 8 * gap_change
 
-    # Leader light sits at wherever the chaser
-    # is plus the current gap_size.
+    # Leader light is placed ahead of
+    # chaser by the gap_size.
     i_leader_start = gap_size
-    i_leader_end = gap_size + 7 # One-light gap (4 integers + 3 commas)
+    i_leader_end = gap_size + 7
     i_chaser_start = 0
-    i_chaser_end = 7 # Target first light (4 integers + 3 commas)
+    i_chaser_end = 7
 
     for i in list(range(0, 300)):
         # Chaser always takes the original sequence
@@ -84,23 +49,14 @@ def doChase(sequence, postCallback, leader_rgba = '255,255,255,100',
         # 2. Kill the if/then/else postCallback() line.
         # 3. Kill the function argument.
         if persist == True:
-            # Note: replace each instance of "values" (see else)
-            # with "sequence" to persist lights.
+            # Replace "values" with "sequence" to persist lights.
             sequence = values_before + values_replace + values_after
-            # Leader always takes the new set of values
-            # from the chaser and further modifies it. This is
-            # how lights are turned off after it's "turn"
-            # in the chase sequence.
             values_before = sequence[:i_leader_start]
             values_replace = leader_rgba
             values_after = sequence[i_leader_end:]
             sequence = values_before + values_replace + values_after
         else:
             values = values_before + values_replace + values_after
-            # Leader always takes the new set of values
-            # from the chaser and further modifies it. This is
-            # how lights are turned off after it's "turn"
-            # in the chase sequence.
             values_before = values[:i_leader_start]
             values_replace = leader_rgba
             values_after = values[i_leader_end:]
@@ -149,4 +105,4 @@ persist = False #optional (and perhaps we don't do this?)
 
 
 # Execute the sequence.
-doChase(sequence, callback, leader_rbga, sequence_rbga, gap_size, gap_change, speed, persist)
+chase(sequence, callback, leader_rbga, sequence_rbga, gap_size, gap_change, speed, persist)
