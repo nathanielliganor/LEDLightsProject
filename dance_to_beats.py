@@ -48,17 +48,10 @@ def danceToBeats(sequence, postCallback, loops = 1):
             beats.append(-1 * int(float(row[0])))
 
     # Rescale numbers to range(0, 300)
-    for beat in range(0, len(beats)):
-        beats[beat] = int(rescale(beats[beat], min(beats), max(beats), 0, 299))
-
-    # Better scaling
-    # new_beats = []
-    # for beat in beats:
-        # new_beats.append((beat - min(beats)) * (300 / (max(beats) - min(beats))))
-        # position = (beat - min(beats)) * (300 / (max(beats) - min(beats)))
-        # print(position)
-        # color = (beat - min(beats)) * (255 / (max(beats) - min(beats)))
-        # print(color)
+    # https://stackoverflow.com/questions/19057341/translate-numbers-from-a-range-to-another-range
+    beats_scaled = []
+    for beat in beats:
+        beats_scaled.append(int((beat - min(beats)) * (300 / (max(beats) - min(beats)))))
 
     # Todo: seems to loop endlessly, check reused "loops" variable in range().
     # number of playbacks
@@ -66,18 +59,15 @@ def danceToBeats(sequence, postCallback, loops = 1):
     for loop in loops:
 
         j = 0
-        for beat in beats:
+        for beat in beats_scaled:
             # Color is proportional to the beat.
-            r = int(beat)
-            g = int(beat)
-            b = int(beat)
-
+            rgb = int(beat)
             # Alpha is proportional to duration.
             a = -1 * j
 
-            values_before = sequence[:beat * 3] # HOW CAN WE REACH THE WHOLE STRIP? https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
-            values_replace = str(r) +','+str(g)+','+str(b)+','+str(a)
-            values_after = sequence[(beat) * 3 + 30:] # HOW TO SCALE NUMBERS TO REACH WHOLE STRIP: https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+            values_before = sequence[:beat * 4] # HOW CAN WE REACH THE WHOLE STRIP? https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+            values_replace = str(rgb) +','+str(rgb)+','+str(rgb)+','+str(a)
+            values_after = sequence[(beat) * 4 + 30:] # HOW TO SCALE NUMBERS TO REACH WHOLE STRIP: https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
             values = values_before + values_replace + values_after
 
             postCallback(values)
