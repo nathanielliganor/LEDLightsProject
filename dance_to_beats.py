@@ -32,6 +32,7 @@ def getBlankSequence():
 
 # Rescale a range of numbers into another, new
 # range, while occupying the entire new range.
+# @see: https://stackoverflow.com/questions/19057341/translate-numbers-from-a-range-to-another-range
 def rescale(val, in_min, in_max, out_min, out_max):
     return out_min + (val - in_min) * ((out_max - out_min) / (in_max - in_min))
 
@@ -59,6 +60,7 @@ def danceToBeats(sequence, postCallback, loops = 1):
         # color = (beat - min(beats)) * (255 / (max(beats) - min(beats)))
         # print(color)
 
+    # Todo: seems to loop endlessly, check reused "loops" variable in range().
     # number of playbacks
     loops = range(0, loops)
     for loop in loops:
