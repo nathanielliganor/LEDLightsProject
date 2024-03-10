@@ -31,15 +31,15 @@ import time
 cats_url = "https://si568.umsi.run/change?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoic2hhaGF5dUB1bWljaC5lZHUifQ.lOZzE4nwWFj-sNa-etncEQXAJV9rbCV7ElBnGx2skKk&device=CATS"
 
 def send_signals(signal_values):
-    print(f"Signal Values: {signal_values}")
+    # print(f"Signal Values: {signal_values}")
     response = requests.post(cats_url, json={"values": signal_values})
-    if response.ok:
-        print("Request was successful!")
-        print(response.json())
-    else:
-        print("Request failed!")
-        print("Status code:", response.status_code)
-        print("Response text:", response.text)
+    # if response.ok:
+    #     print("Request was successful!")
+    #     print(response.json())
+    # else:
+    #     print("Request failed!")
+    #     print("Status code:", response.status_code)
+    #     print("Response text:", response.text)
 
 
 def color_sequence(colors):
@@ -70,15 +70,25 @@ def get_umich_lights():
 # a) Every other light changes. (E.g., first light is maize, the second is blue, then the first light changes to blue, and the second light changes to maize, and so on.)
 # b) All lights change together. (E.g., all lights maize, then all lights blue, maize, and so on.)
 # c) Can you fade the lights?
-
+import time
 def alternate_lights():
     signal_values = ""
     color1 = "255, 255, 0, 0"
     color2 = "0, 0, 255, 0"
-    for i in range(300):
-        signal_values += color1 + ", " + color2 + ", "
-    signal_values = signal_values[:-2]
-    return signal_values
+
+    for i in range(10):
+        signal_values = ""
+        # Every other loop swap maize and blue.
+        if i % 2 == 0:
+            for j in range(300):
+                signal_values += color1 + ", " + color2 + ", "
+        else:
+            for j in range(300):
+                signal_values += color2 + ", " + color1 + ", "
+
+        time.sleep(1)
+        signal_values = signal_values[:-2]
+        send_signals(signal_values)
 
 def main():
     requirement_1_colors = [
@@ -88,10 +98,10 @@ def main():
         "0, 0, 255, 0",
     ]  # Blue, Red, White, Green
     signal_values = color_sequence(requirement_1_colors)
-    print(f"Final Signal Values: {signal_values}")
-    send_signals(signal_values)
+    # print(f"Final Signal Values: {signal_values}")
+    # send_signals(signal_values)
     # send_signals(get_umich_lights())
-    # send_signals(alternate_lights())
+    send_signals(alternate_lights())
 
 if __name__ == "__main__":
     main()
