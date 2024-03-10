@@ -50,6 +50,15 @@ def danceToBeats(sequence, postCallback, loops = 1):
     for beat in range(0, len(beats)):
         beats[beat] = int(rescale(beats[beat], min(beats), max(beats), 0, 299))
 
+    # Better scaling
+    # new_beats = []
+    # for beat in beats:
+        # new_beats.append((beat - min(beats)) * (300 / (max(beats) - min(beats))))
+        # position = (beat - min(beats)) * (300 / (max(beats) - min(beats)))
+        # print(position)
+        # color = (beat - min(beats)) * (255 / (max(beats) - min(beats)))
+        # print(color)
+
     # number of playbacks
     loops = range(0, loops)
     for loop in loops:
