@@ -66,7 +66,7 @@ def danceToBeats(sequence, postCallback, loops = 1):
 
             values_before = sequence[:beat * 3] # HOW CAN WE REACH THE WHOLE STRIP? https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
             values_replace = str(r) +','+str(g)+','+str(b)+','+str(a)
-            values_after = sequence[(beat * 3) + 30:] # HOW TO SCALE NUMBERS TO REACH WHOLE STRIP: https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+            values_after = sequence[(beat) * 3 + 30:] # HOW TO SCALE NUMBERS TO REACH WHOLE STRIP: https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
             values = values_before + values_replace + values_after
 
             postCallback(values)
