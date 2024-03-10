@@ -23,4 +23,4 @@ def alternate_lights():
         signal_values = signal_values[:-2]
         send_signals(signal_values)
 
-alternate_lights()
+# alternate_lights()

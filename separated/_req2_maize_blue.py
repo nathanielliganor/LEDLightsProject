@@ -16,4 +16,4 @@ def get_umich_lights():
     signal_values = signal_values[:-2]
     send_signals(signal_values)
 
-get_umich_lights()
+# get_umich_lights()

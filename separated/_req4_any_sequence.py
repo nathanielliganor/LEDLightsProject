@@ -66,6 +66,6 @@ def danceToBeats(sequence, postCallback, numloops = 1):
             j = j + 1
 
 
-sequence = getBlankSequence()
-
-danceToBeats(sequence, send_signals, 10)
+# sequence = getBlankSequence()
+#
+# danceToBeats(sequence, send_signals, 10)
