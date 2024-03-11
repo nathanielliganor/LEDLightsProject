@@ -18,9 +18,13 @@ def send_signals(signal_values):
 
 def set_time(area, location, region=""):
     url = f"http://worldtimeapi.org/api/timezone/{area}/{location}/{region}"
-    response = requests.get(url)
-    data = response.json()
-    return data["datetime"]
+    try:
+        response = requests.get(url)
+        data = response.json()
+        return data["datetime"]
+    except response.exceptions.RequestException as e:
+        print("Error:", e)
+        return None
 
 # def clock_lights():
 
