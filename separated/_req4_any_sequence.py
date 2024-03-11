@@ -6,8 +6,6 @@ from _send_signals import send_signals
 range, while occupying the entire new range.
 @see: https://stackoverflow.com/questions/19057341/translate-numbers-from-a-range-to-another-range
 """
-
-
 def rescale(val, in_min, in_max, out_min, out_max):
     return out_min + (val - in_min) * ((out_max - out_min) / (in_max - in_min))
 
@@ -15,8 +13,6 @@ def rescale(val, in_min, in_max, out_min, out_max):
 """ Change colors, locations, alphas, and speed
 based on decibel samples using Audacity.
 """
-
-
 def danceToBeats(sequence, postCallback, numloops=1):
     import csv
     beats = []
