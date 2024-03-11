@@ -51,6 +51,3 @@ def danceToBeats(sequence, postCallback, numloops=1):
             time.sleep(interval)
 
             j = j + 1
-
-# sequence = getBlankSequence()
-# danceToBeats(sequence, send_signals, 10)
