@@ -23,6 +23,7 @@ def main():
     #       3, 1, 0.0001, False),
     # hour_tracker() # Uncomment out from/import above to active
     # generate_flag_signals()
-g
+
+
 if __name__ == "__main__":
     main()
