@@ -2,19 +2,6 @@ import time
 from _get_blank_sequence import getBlankSequence
 from _send_signals import send_signals
 
-""" Generate a 300-light blank sequence
-consisting of unlit "0" values.
-"""
-# def getBlankSequence():
-#     values_default = ''
-#
-#     for led_i in list(range(0, 300)):
-#         leading_comma = ',' if led_i != 0 else ''
-#         values_default = values_default + leading_comma + '0,0,0,0'
-#
-#     return values_default
-
-
 """ Rescale a range of numbers into another, new
 range, while occupying the entire new range.
 @see: https://stackoverflow.com/questions/19057341/translate-numbers-from-a-range-to-another-range
@@ -56,11 +43,9 @@ def danceToBeats(sequence, postCallback, numloops=1):
             # Alpha is proportional to duration.
             a = -1 * j
 
-            values_before = sequence[
-                            :beat * 4]  # HOW CAN WE REACH THE WHOLE STRIP? https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+            values_before = sequence[:beat * 4]
             values_replace = str(rgb) + ',' + str(rgb) + ',' + str(rgb) + ',' + str(a)
-            values_after = sequence[(
-                                        beat) * 4 + 30:]  # HOW TO SCALE NUMBERS TO REACH WHOLE STRIP: https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+            values_after = sequence[(beat) * 4 + 30:]
             values = values_before + values_replace + values_after
 
             postCallback(values)
@@ -72,5 +57,4 @@ def danceToBeats(sequence, postCallback, numloops=1):
             j = j + 1
 
 # sequence = getBlankSequence()
-#
 # danceToBeats(sequence, send_signals, 10)
