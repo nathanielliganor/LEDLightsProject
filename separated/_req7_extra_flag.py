@@ -6,9 +6,9 @@ from _send_signals import send_signals
 def generate_flag_signals():
     signal_values = ""
     color_mapping = {
-        "1": "255, 0, 0, 0, ",   # Red color
-        "2": "0, 0, 255, 0, ",   # Blue color
-        "3": "255, 255, 255, 0, "    # White color
+        "1": "255, 0, 0, 0, ",  # Red color
+        "2": "0, 0, 255, 0, ",  # Blue color
+        "3": "255, 255, 255, 0, "  # White color
     }
 
     for row in range(10):
@@ -16,7 +16,7 @@ def generate_flag_signals():
             if row % 2 == 0:  # Even rows (0-based indexing)
                 if row < 5:  # First 5 rows
                     if col < 12:  # First 40% of columns
-                        if(col%2 ==0):
+                        if col % 2 == 0:
                             signal_values += color_mapping["2"]  # Signal for blue color
                         else:
                             signal_values += color_mapping["3"]
@@ -27,7 +27,7 @@ def generate_flag_signals():
             else:
                 if row < 5:
                     if col > 17:
-                        if(col %2 ==0):
+                        if col % 2 == 0:
                             signal_values += color_mapping["3"]
                         else:
                             signal_values += color_mapping["2"]

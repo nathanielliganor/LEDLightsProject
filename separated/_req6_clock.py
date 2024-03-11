@@ -12,6 +12,7 @@ def set_time(area, location, region=""):
     data = response.json()
     return data["datetime"]
 
+
 # def clock_lights():
 
 def hour_tracker(current_time):
@@ -26,9 +27,9 @@ def hour_tracker(current_time):
                 send_signals(signal_values)
                 time.sleep(0.1)
 
-
         # signal_values = signal_values[:-2]
         # return signal_values
+
 
 USA_time = set_time("America", "Detroit")
 dt = datetime.fromisoformat(USA_time)

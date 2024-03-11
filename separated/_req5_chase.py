@@ -2,15 +2,15 @@ import time
 from _get_blank_sequence import getBlankSequence
 from _send_signals import send_signals
 
-
 """This function takes a blank sequence of unlit lights
 and creates a leader-chaser sequence where the chaser
 can try to close the gap with the leader.
 """
-def chase(sequence, postCallback, leader_rgba = '255,255,255,100',
-            chaser_rgba = '255,255,255,100', gap_size = 3,
-            gap_change = 1, speed = 0.00001, persist = False):
 
+
+def chase(sequence, postCallback, leader_rgba='255,255,255,100',
+          chaser_rgba='255,255,255,100', gap_size=3,
+          gap_change=1, speed=0.00001, persist=False):
     # Standardardize rgba formats consistency.
     leader_rgba = leader_rgba.replace(' ', '')
     chaser_rgba = chaser_rgba.replace(' ', '')
@@ -19,7 +19,7 @@ def chase(sequence, postCallback, leader_rgba = '255,255,255,100',
     # be adjusted on a per-light, per-loop basis.
     # Note: an arg of '1' indicates an 1-light gap,
     # or 4 values (r,b,g,a), e.g. 4^3 = (4 vals)^(three lights).
-    gap_size = 4**gap_size
+    gap_size = 4 ** gap_size
     # Note: an arg of '1' indicates a 1 light gap
     # by one light per loop.
     gap_change = 8 * gap_change
@@ -48,7 +48,7 @@ def chase(sequence, postCallback, leader_rgba = '255,255,255,100',
         # 1. Kill the remaining conditional and fix indent.
         # 2. Kill the if/then/else postCallback() line.
         # 3. Kill the function argument.
-        if persist == True:
+        if persist:
             # Replace "values" with "sequence" to persist lights.
             sequence = values_before + values_replace + values_after
             values_before = sequence[:i_leader_start]
@@ -63,7 +63,7 @@ def chase(sequence, postCallback, leader_rgba = '255,255,255,100',
             values = values_before + values_replace + values_after
 
         # Using a callback to make swaps easy.
-        if persist == True:
+        if persist:
             postCallback(sequence)
         else:
             postCallback(values)
@@ -91,7 +91,6 @@ def chase(sequence, postCallback, leader_rgba = '255,255,255,100',
         # Speed is limited by processing
         # and internet bandwidth.
         time.sleep(speed)
-
 
 # # Some settings.
 # sequence = getBlankSequence()
