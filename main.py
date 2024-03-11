@@ -42,3 +42,6 @@ def main():
 
     # signal_values = StaticLights.hour_tracker(dt)
     lights.send_signals(signal_values)
+
+if __name__=="__main__":
+    main()
