@@ -6,8 +6,6 @@ from _send_signals import send_signals
 and creates a leader-chaser sequence where the chaser
 can try to close the gap with the leader.
 """
-
-
 def chase(sequence, postCallback, leader_rgba='255,255,255,100',
           chaser_rgba='255,255,255,100', gap_size=3,
           gap_change=1, speed=0.00001, persist=False):
@@ -91,17 +89,3 @@ def chase(sequence, postCallback, leader_rgba='255,255,255,100',
         # Speed is limited by processing
         # and internet bandwidth.
         time.sleep(speed)
-
-# # Some settings.
-# sequence = getBlankSequence()
-# callback = send_signals
-# leader_rbga = '255,255,255,100'  #optional
-# sequence_rbga = '255,100,255,100'  #optional
-# gap_size = 3  #optional
-# gap_change = 1  #optional
-# speed = 0.00001  #optional
-# persist = False #optional (and perhaps we don't do this?)
-#
-#
-# # Execute the sequence.
-# chase(sequence, callback, leader_rbga, sequence_rbga, gap_size, gap_change, speed, persist)
