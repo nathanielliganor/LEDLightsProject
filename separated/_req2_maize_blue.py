@@ -1,9 +1,10 @@
 from _send_signals import send_signals
 
-
 """ Requirement 2: make every other
 light maize and blue.
 """
+
+
 def get_umich_lights():
     signal_values = ""
 

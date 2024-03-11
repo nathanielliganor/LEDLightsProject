@@ -19,6 +19,8 @@ consisting of unlit "0" values.
 range, while occupying the entire new range.
 @see: https://stackoverflow.com/questions/19057341/translate-numbers-from-a-range-to-another-range
 """
+
+
 def rescale(val, in_min, in_max, out_min, out_max):
     return out_min + (val - in_min) * ((out_max - out_min) / (in_max - in_min))
 
@@ -26,7 +28,9 @@ def rescale(val, in_min, in_max, out_min, out_max):
 """ Change colors, locations, alphas, and speed
 based on decibel samples using Audacity.
 """
-def danceToBeats(sequence, postCallback, numloops = 1):
+
+
+def danceToBeats(sequence, postCallback, numloops=1):
     import csv
     beats = []
     with open('dance_to_beats.csv', newline='') as csvfile:
@@ -52,19 +56,20 @@ def danceToBeats(sequence, postCallback, numloops = 1):
             # Alpha is proportional to duration.
             a = -1 * j
 
-            values_before = sequence[:beat * 4] # HOW CAN WE REACH THE WHOLE STRIP? https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
-            values_replace = str(rgb) +','+str(rgb)+','+str(rgb)+','+str(a)
-            values_after = sequence[(beat) * 4 + 30:] # HOW TO SCALE NUMBERS TO REACH WHOLE STRIP: https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+            values_before = sequence[
+                            :beat * 4]  # HOW CAN WE REACH THE WHOLE STRIP? https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+            values_replace = str(rgb) + ',' + str(rgb) + ',' + str(rgb) + ',' + str(a)
+            values_after = sequence[(
+                                        beat) * 4 + 30:]  # HOW TO SCALE NUMBERS TO REACH WHOLE STRIP: https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
             values = values_before + values_replace + values_after
 
             postCallback(values)
 
             # Duration is proportional to the beat.
-            interval = float(beat/300)/len(beats)
+            interval = float(beat / 300) / len(beats)
             time.sleep(interval)
 
             j = j + 1
-
 
 # sequence = getBlankSequence()
 #

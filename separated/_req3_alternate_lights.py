@@ -4,6 +4,8 @@ from _send_signals import send_signals
 """Requirement 3: alternating maize and
 blue lights.
 """
+
+
 def alternate_lights():
     # signal_values = ""
     color1 = "255, 255, 0, 0"
