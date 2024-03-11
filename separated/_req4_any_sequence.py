@@ -36,11 +36,11 @@ def danceToBeats(sequence, postCallback, numloops=1):
         for beat in beats_scaled:
             # Color is proportional to the beat.
             rgb = int(beat)
-            # Alpha is proportional to duration.
-            a = -1 * j
+            # White is proportional to duration.
+            w = -1 * j
 
             values_before = sequence[:beat * 4]
-            values_replace = str(rgb) + ',' + str(rgb) + ',' + str(rgb) + ',' + str(a)
+            values_replace = str(rgb) + ',' + str(rgb) + ',' + str(rgb) + ',' + str(w)
             values_after = sequence[(beat) * 4 + 30:]
             values = values_before + values_replace + values_after
 
