@@ -5,4 +5,4 @@ The goal is to make modular, adjustable code for controlling a strip of 300 mult
 
 How it works:
 
-We create an aray of 300 LEDs with the rows representing values and columns representing individual rows.
+We create an array of 300 LEDs with the rows representing values and columns representing individual rows.
