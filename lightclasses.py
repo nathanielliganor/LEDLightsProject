@@ -9,9 +9,9 @@ class LEDLights():
 
     # We can use a common function to
     # send values.
-    def send_signals(signal_values):
+    def send_signals(self, signal_values):
         try:
-            response = requests.post(CATS_URL, json={"values": signal_values})
+            response = requests.post(self.url, json={"values": signal_values})
         except:
             raise Exception('Error sending signals',
                             response.status_code, response.text)
@@ -52,7 +52,7 @@ class StaticLights(LEDLights):
     """ Requirement 1: alternate entire strip
         from green, red, white, and blue.
     """
-    def color_sequence(sleep = 0.5):
+    def color_sequence(self, sleep = 0.5):
         colors = ['0, 0, 255, 0',
                 '255, 0, 0, 0',
                 '0, 0, 0, 255',
@@ -66,13 +66,13 @@ class StaticLights(LEDLights):
                 for j in range(300):
                     signal_values += (', ' if j != 0 else '') + color
 
-                LEDLights.send_signals(signal_values)
+                self.send_signals(signal_values)
                 time.sleep(sleep)
 
     """ Requirement 2: make every other
     light maize and blue.
     """
-    def get_umich_lights():
+    def get_umich_lights(self):
         signal_values = ""
 
         for i in range(300):
@@ -82,12 +82,12 @@ class StaticLights(LEDLights):
                 signal_values += "0, 0, 255, 0, "
 
         signal_values = signal_values[:-2]
-        LEDLights.send_signals(signal_values)
+        self.send_signals(signal_values)
 
     """Requirement 3: alternating maize and
     blue lights.
     """
-    def alternate_lights():
+    def alternate_lights(self):
         # signal_values = ""
         color1 = "255, 255, 0, 0"
         color2 = "0, 0, 255, 0"
@@ -104,10 +104,10 @@ class StaticLights(LEDLights):
 
             time.sleep(0.1)
             signal_values = signal_values[:-2]
-            LEDLights.send_signals(signal_values)
+            self.send_signals(signal_values)
 
     # Function to generate signals for displaying the American flag
-    def generate_flag_signals():
+    def generate_flag_signals(self):
         signal_values = ""
         color_mapping = {
             "1": "255, 0, 0, 0, ",  # Red color
@@ -141,9 +141,9 @@ class StaticLights(LEDLights):
                         signal_values += color_mapping["3"]
 
         signal_values = signal_values[:-2]  # Removing the extra comma and space at the end
-        return signal_values
+        self.send_signals(signal_values)
 
-    def hour_tracker(current_time):
+    def hour_tracker(self, current_time):
         colors = ["255, 165, 0, 0", "0, 0, 255, 0"]
         if current_time.minute != 0 and current_time.second != 0:
             signal_values = ""
@@ -152,11 +152,11 @@ class StaticLights(LEDLights):
                 for i in range(10):
                     for j in range(0, current_time.hour):
                         signal_values += (", " if j != 0 else "") + color
-                    LEDLights.send_signals(signal_values)
+                    self.send_signals(signal_values)
                     time.sleep(0.1)
 
-            # signal_values = signal_values[:-2]
-            # return signal_values
+            signal_values = signal_values[:-2]
+            self.send_signals(signal_values)
 
 class DynamicLights(LEDLights):
 
@@ -209,6 +209,10 @@ class DynamicLights(LEDLights):
     def chase(sequence, postCallback, leader_rgba='255,255,255,100',
             chaser_rgba='255,255,255,100', gap_size=3,
             gap_change=1, speed=0.00001, persist=False):
+        print(sequence)
+        print(postCallback)
+        print(leader_rgba)
+        print(chaser_rgba)
         # Standardardize rgba formats consistency.
         leader_rgba = leader_rgba.replace(' ', '')
         chaser_rgba = chaser_rgba.replace(' ', '')
